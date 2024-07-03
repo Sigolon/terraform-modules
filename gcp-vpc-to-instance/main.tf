@@ -16,14 +16,13 @@ module "vpc" {
   vpc_cidr    = var.vpc_cidr
 }
 
-# 這裡的 output 也要改
 module "subnet" {
   source      = "./modules/vpc-subnet"
   GCP_PROJECT = var.GCP_PROJECT
   subnet_name = var.subnet_name
   GCP_REGION  = var.GCP_REGION
   subnet_cidr = var.subnet_cidr
-  vpc_id      = module.vpc.vpc_id  # 使用 VPC 模塊的輸出作為輸入
+  vpc_id      = module.vpc.vpc_id 
   depends_on = [module.vpc]
 }
 
@@ -41,7 +40,6 @@ module "firewall" {
   depends_on = [module.subnet]
 }
 
-# 這裡要填上 network 部位
 module "compute_engine" {
   source        = "./modules/compute_engine"
   instance_name = var.instance_name
