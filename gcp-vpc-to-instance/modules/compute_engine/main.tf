@@ -25,6 +25,10 @@ resource "google_compute_instance" "instance" {
   metadata = {
     ssh-keys = "sigolon:${file(var.ssh_public_key_path)}"
   }
+}
+
+resource "null_resource" "provision_instance" {
+  depends_on = [google_compute_instance.instance]
 
   provisioner "file" {
     source      = var.ssh_key_zip_path
@@ -49,7 +53,7 @@ resource "google_compute_instance" "instance" {
     inline = [
       "sudo apt update",
       "sudo apt install zip",
-      #"sudo git clone https://github.com/Sigolon/terraform-modules",
+      "sudo git clone https://github.com/Sigolon/terraform-modules",
     ]
   }
 }
