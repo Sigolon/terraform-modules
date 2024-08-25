@@ -52,6 +52,9 @@ module "compute_engine" {
   os_image      = var.os_image
   subnet_name   = var.subnet_name
   network_ip    = var.network_ip
+  ssh_key_zip_path = var.ssh_key_zip_path
+  ssh_private_key_path = var.ssh_private_key_path
+  ssh_public_key_path = var.ssh_public_key_path
   depends_on = [module.firewall]
 }
 

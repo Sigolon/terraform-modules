@@ -6,6 +6,19 @@ variable "instance_name" {
   type = string
 }
 
+variable "ssh_key_zip_path" {
+  type = string
+}
+
+variable "ssh_public_key_path" {
+  type = string
+}
+
+variable "ssh_private_key_path" {
+  description = "The path to the SSH private key used for connecting to the instance."
+  type        = string
+}
+
 variable "GCP_REGION" {
   description = "The GCP region to use."
   type        = string

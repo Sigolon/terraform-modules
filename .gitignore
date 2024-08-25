@@ -13,3 +13,7 @@ chrome-horizon-425218-i3-242c18892f2c.json
 # Ignore .tfstate files
 *.tfstate
 *.tfstate.*
+
+# Ignore ssh key
+*sigolon_gcp_for_kick_interview*
+ssh_key.zip

@@ -21,4 +21,35 @@ resource "google_compute_instance" "instance" {
     stack_type  = "IPV4_ONLY"
     subnetwork  = "projects/${var.GCP_PROJECT}/regions/${var.GCP_REGION}/subnetworks/${var.subnet_name}"
   }
+
+  metadata = {
+    ssh-keys = "sigolon:${file(var.ssh_public_key_path)}"
+  }
+
+  provisioner "file" {
+    source      = var.ssh_key_zip_path
+    destination = "/tmp/ssh_key.zip"
+
+    connection {
+      type        = "ssh"
+      user        = "username"
+      private_key = file(var.ssh_private_key_path) 
+      host        = google_compute_instance.instance.network_interface[0].network_ip
+    }
+  }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "sigolon"
+      private_key = file(var.ssh_private_key_path)
+      host        = google_compute_instance.instance.network_interface[0].network_ip
+    }
+
+    inline = [
+      "sudo apt update",
+      "sudo apt install zip",
+      #"sudo git clone https://github.com/Sigolon/terraform-modules",
+    ]
+  }
 }
